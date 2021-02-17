@@ -4,16 +4,20 @@
 
 # Site
 title: 冰柠配绿茶的秘密后花园
-subtitle: 被你发现啦~
-description: ''
+subtitle: 让美好的时光常驻
+description: <b>先学会做好自己</b>
 keywords:
+        - 冰柠配绿茶
+        - 博客
+        - 主页
+        - FrozenLemonTee
 author: FrozenLemonTee
 language: zh-Hans
 timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: https://github.com/FrozenLemonTee/FrozenLemonTee.github.io
+url: https://FrozenLemonTee.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -41,7 +45,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -104,5 +108,6 @@ theme: Kratos-Rebirth
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: https://github.com/FrozenLemonTee/FrozenLemonTee.github.io.git
+  # repository: https://github.com/FrozenLemonTee/FrozenLemonTee.github.io.git
+  repository: git@github.com:FrozenLemonTee/FrozenLemonTee.github.io.git
   branch: master
