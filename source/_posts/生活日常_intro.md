@@ -7,7 +7,7 @@ only:
 	- category
 ---
 
-<img src="生活日常_intro/分割线3.jpg" style="zoom:150%;" />
+{%asset_img 分割线3.jpg 636 30 %}
 
 # **欢迎！这里是秘密花园的茶话室！**
 
@@ -15,6 +15,6 @@ only:
 
 ***遥望着夕阳落下，一天就这么过去了吗？***
 
-<img src="生活日常_intro/分割线3.jpg" style="zoom:150%;" />
+{%asset_img 分割线3.jpg 636 30 %}
 
 #### **这里会分享生活中值得被记录的点点滴滴**。

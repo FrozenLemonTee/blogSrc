@@ -6,7 +6,7 @@ top: true
 type: status
 date: 2333-01-01 12:00:00
 ---
-<img src="极客世界_intro/分割线5.png" style="zoom:30%;" />
+{%asset_img 分割线5.png%}
 
 # **欢迎来到秘密花园的极客世界！**
 
@@ -14,7 +14,7 @@ date: 2333-01-01 12:00:00
 
 ***但幽静的环境也恰恰满足了许久深思熟虑的要求，最酷的IDEA都在这里诞生！***
 
-<img src="极客世界_intro/分割线5_reverse.png" style="zoom:30%;" />
+{%asset_img 分割线5_reverse.png%}
 
 #### **这里展示的是我的各种技术向的原创文章、原创作品哦~**
 

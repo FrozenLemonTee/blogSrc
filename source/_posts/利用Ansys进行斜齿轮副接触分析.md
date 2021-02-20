@@ -276,12 +276,14 @@ PLNSOL, S, EQV
 
 ### 结果展示
 
-![建模与边界条件设置](利用Ansys进行斜齿轮副接触分析/利用Ansys进行斜齿轮副接触分析1.png)
+{%asset_img 利用Ansys进行斜齿轮副接触分析1.png%}
 
+<center>建模与边界条件设置</center>
 
+{%asset_img 利用Ansys进行斜齿轮副接触分析2.png%}
 
-![等效应力云图](利用Ansys进行斜齿轮副接触分析/利用Ansys进行斜齿轮副接触分析2.png)
+<center>等效应力云图</center>
 
+{%asset_img 利用Ansys进行斜齿轮副接触分析3.png%}
 
-
-![接触滑移距离云图](利用Ansys进行斜齿轮副接触分析/利用Ansys进行斜齿轮副接触分析3.png)
+<center>接触滑移距离云图</center>

@@ -221,28 +221,30 @@ PLNSOL, S, EQV
 
 ### 步骤截图
 
-![建立桥面](利用Ansys进行斜拉桥的受力分析/利用Ansys进行斜拉桥的受力分析2.png)
+{%asset_img 利用Ansys进行斜拉桥的受力分析2.png%}
 
+<center>建立桥面</center>
 
+{%asset_img 利用Ansys进行斜拉桥的受力分析3.png%}
 
-![桥面划分网格](利用Ansys进行斜拉桥的受力分析/利用Ansys进行斜拉桥的受力分析3.png)
+<center>桥面划分网格</center>
 
+{%asset_img 利用Ansys进行斜拉桥的受力分析4.png%}
 
+<center>建立桥墩</center>
 
-![建立桥墩](利用Ansys进行斜拉桥的受力分析/利用Ansys进行斜拉桥的受力分析4.png)
+{%asset_img 利用Ansys进行斜拉桥的受力分析5.png%}
 
+<center>建立立柱</center>
 
+{%asset_img 利用Ansys进行斜拉桥的受力分析6.png%}
 
-![建立立柱](利用Ansys进行斜拉桥的受力分析/利用Ansys进行斜拉桥的受力分析5.png)
+<center>建立拉索</center>
 
+{%asset_img 利用Ansys进行斜拉桥的受力分析7.png%}
 
+<center>建立接触对</center>
 
-![建立拉索](利用Ansys进行斜拉桥的受力分析/利用Ansys进行斜拉桥的受力分析6.png)
+{%asset_img 利用Ansys进行斜拉桥的受力分析8.png%}
 
-
-
-![建立接触对](利用Ansys进行斜拉桥的受力分析/利用Ansys进行斜拉桥的受力分析7.png)
-
-
-
-![设置边界条件](利用Ansys进行斜拉桥的受力分析/利用Ansys进行斜拉桥的受力分析8.png)
+<center>设置边界条件</center>
