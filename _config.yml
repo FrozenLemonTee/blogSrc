@@ -17,7 +17,7 @@ timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: https://FrozenLemonTee.github.io
+url: https://frozenlemontee.top
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -107,7 +107,12 @@ theme: Kratos-Rebirth
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: git
-  # repository: https://github.com/FrozenLemonTee/FrozenLemonTee.github.io.git
-  repository: git@github.com:FrozenLemonTee/FrozenLemonTee.github.io.git
-  branch: master
+  # - type: git
+  #   # repository: https://github.com/FrozenLemonTee/FrozenLemonTee.github.io.git
+  #   repository: git@github.com:FrozenLemonTee/FrozenLemonTee.github.io.git
+  #   branch: master
+  - type: git
+    repo:
+        aliyun: git@47.117.125.56:/home/git/repos/blog.git
+        github: git@github.com:FrozenLemonTee/FrozenLemonTee.github.io.git
+    branch: master
