@@ -26,9 +26,9 @@ toc: true
 >
 > **\# description： 让美好的时光常驻**
 >
-> **\# avartar： https://i.loli.net/2021/02/13/A42Da7EICwZ8hWv.jpg**
+> **\# avatar： https://i.loli.net/2021/02/13/A42Da7EICwZ8hWv.jpg**
 >
-> **\# link： https://frozenlemontee.github.io/**
+> **\# link： https://www.frozenlemontee.top/**
 
 如果我的链接突然失效了，欢迎告诉我哦！另外如果我的链接有变更，我也会在这里更新并尽快通知各位的！
 

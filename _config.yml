@@ -12,12 +12,12 @@ keywords:
         - 主页
         - FrozenLemonTee
 author: FrozenLemonTee
-language: zh-Hans
+language: zh-CN
 timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: https://frozenlemontee.top
+url: https://www.frozenlemontee.top
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
