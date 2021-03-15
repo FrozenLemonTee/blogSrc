@@ -28,6 +28,8 @@
     "hexo-theme-landscape": "^0.0.3"
   },
   "devDependencies": {
-    "@waline/client": "^0.14.7"
+    "@waline/client": "^0.14.7",
+    "hexo-generator-baidu-sitemap": "^0.1.9",
+    "hexo-generator-sitemap": "^2.1.0"
   }
 }

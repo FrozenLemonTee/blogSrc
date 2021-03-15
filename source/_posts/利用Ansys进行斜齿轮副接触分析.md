@@ -5,6 +5,7 @@ date: 2021-02-15 16:23:17
 sticky: 90
 pic: 利用Ansys进行斜齿轮副接触分析4.png
 toc: true
+top: true
 tags: 
 	- Ansys
 	- 工程仿真
