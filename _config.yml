@@ -114,5 +114,5 @@ deploy:
   - type: git
     repo:
         aliyun: git@47.117.125.56:/home/git/repos/blog.git
-        github: git@github.com:FrozenLemonTee/FrozenLemonTee.github.io.git
+#        github: git@github.com:FrozenLemonTee/FrozenLemonTee.github.io.git
     branch: master
