@@ -24,7 +24,7 @@ toc: true
 
 > **\# ID： 冰柠配绿茶的秘密后花园**
 >
-> **\# description： 让美好的时光常驻**
+> **\# bio： 让美好的时光常驻**
 >
 > **\# avatar： https://i.loli.net/2021/10/26/rIDnecjG2QAZVvf.jpg**
 >
@@ -40,7 +40,7 @@ toc: true
 
 >**\# ID：**
 >
->**\# description：**
+>**\# bio：**
 >
 >**\# avatar：**
 >
