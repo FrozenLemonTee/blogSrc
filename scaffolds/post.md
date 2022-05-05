@@ -10,4 +10,5 @@ toc:
 tags:
 categories:
 keywords:
+mathjax:
 ---
