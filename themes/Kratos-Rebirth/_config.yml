@@ -1,0 +1,224 @@
+
+# Global 全局配置
+site_analytics: <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?df581157cd9d6219e402d25e06e06345";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm, s);})();</script>
+hoster: <a href="https://www.aliyun.com" target="_blank">Aliyun</a>
+site_logo: /images/favicon.ico
+snow: true
+enable_dark: false
+cdn: false
+
+# Index 首页配置
+index:
+  post_type: false
+
+# Top Menu 顶部导航栏配置 （具体格式请参照文档）
+menu:
+  index: /
+  docs:
+    submenu: true
+    archives: /archives/
+    search: /search/
+  works: /categories/极客世界/
+  notes: /categories/学习小抄/
+  reading: /categories/阅读有感/
+  life: /categories/生活日常/
+  friends: /friends/
+  lab:
+    submenu: true
+    ciyana-button: https://ciyana.moe/
+  sites:
+    submenu: true
+    introduce: /about/
+    github: https://github.com/FrozenLemonTee/
+    twitter: https://twitter.com/frozenlemontee
+    leetcode: https://leetcode-cn.com/u/frozenlemontee/
+    bilibili: https://space.bilibili.com/88488273/
+    project: https://github.com/FrozenLemonTee/FrozenLemonTee.github.io
+
+label:
+  index: <i class="fa fa-home"></i>首页
+  docs:
+    submenu: <i class="fa fa-folder"></i>档案馆
+    archives: <i class="fa fa-file"></i>归档
+    search: <i class="fa fa-search"></i>搜索
+  works: <i class="fa fa-code"></i>极客世界
+  notes: <i class="fa fa-pencil"></i>学习小抄
+  reading: <i class="fa fa-bookmark"></i>阅读有感
+  life: <i class="fa fa-coffee"></i>生活日常
+  friends: <i class="fa fa-paw"></i>小伙伴们
+  lab:
+    submenu: <i class="fa fa-flask"></i>实验室
+    ciyana-button: 梦魇按钮
+  sites:
+    submenu: <i class="fa fa-paper-plane"></i>关于我
+    introduce: 自我介绍
+    github: Github主页
+    twitter: 推特主页
+    leetcode: 力扣主页
+    bilibili: B站主页
+    project: 本项目链接
+
+# Footer 页脚配置
+group_link:
+contact:
+  weibo:
+  github: FrozenLemonTee
+  mail: frozenlemontee@outlook.com
+  telegram:
+  twitter: frozenlemontee
+  facebook:
+  linkedin:
+  fediverse:
+    instance:
+    username:
+  rss:
+timenotice: 本站已运行
+icp: 桂ICP备2021001483号
+psr:
+
+# Post Page 文章页配置
+posts:
+  show_cc: true
+  donate: false
+  share: true
+  comments: waline
+
+# Disqus [Disqus](https://disqus.com) 评论相关
+disqus:
+  shortname:
+
+# DisqusJS [DisqusJS](https://disqusjs.skk.moe/) 评论相关
+disqusjs:
+  shortname:
+  sitename:
+  api:
+  apikey:
+  admin:
+  adminlabel:
+
+# Valine [Valine](https://valine.js.org) 评论相关
+valine:
+  app_id:
+  app_key:
+  visitor:
+  enableQQ:
+
+# Twikoo [Twikoo](https://twikoo.js.org) 评论相关
+twikoo:
+  env_id:
+
+# Waline [Waline](https://waline.js.org) 评论相关
+## 不仅限于以下内容，您可以参照 Waline的 [前端配置文档](https://waline.js.org/client/basic.html) 设置您需要的配置项
+## el 和 path 会在页面自动生成，不必加入
+waline:
+  serverURL: "https://commentsblog.vercel.app" #后端服务器地址，必填
+  placeholder: "说点什么吧~(PS:点左上角登录/注册哦)"
+  avatar: "mp"
+  requiredFields: ['nick','mail']
+  visitor: true
+  langMode:
+    nick: 昵称（必填）
+    mail: 邮箱（必填）
+    link: 网址
+
+# APlayer 左下角音乐播放器
+aplayer:
+  enabled: true
+  playlist:
+  meting:
+    server: netease
+    type: playlist
+    id: 6613490674
+  order: random
+
+# Widgets 侧边栏小挂件
+sidebar: right
+widgets:
+- about
+- toc
+- category
+- tagcloud
+- posts
+avatarUri: https://i.loli.net/2021/10/26/rIDnecjG2QAZVvf.jpg
+
+# Fancybox 文章内图片单击放大
+fancybox: true
+
+# Search 搜索
+search:
+  enable: true
+  path: search.json
+  field: post # page | post | all. Default post
+  content: true # Include post | page content
+
+# JavaScript 相关配置
+## 由于Javascript被压缩后难以有效编辑与生成，因而为了简化操作，将相关的配置项在生成文件时以独立的json文件写出，调用时使用fetch API获取。
+jsconfig:
+  main:
+    picCDN: false
+    createTime: "2021/02/12 23:00:00"
+    donateBtn: "支持我~"
+    scanNotice: "扫一扫，好不好？"
+    qr_alipay: "/images/alipayqr.webp"
+    qr_wechat: "/images/wechatpayqr.webp"
+    siteLeaveEvent: true
+    leaveTitle: "{{{(>_<)}}}哦哟，崩溃啦~"
+    returnTitle: "(*´∇｀*)欸，又好啦~"
+    copyrightNotice: "该内容采用 CC BY-NC-SA 4.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"
+    expire_day: 365
+
+# Site verify 站点验证相关配置内容
+site_verify:
+  google: 4qF_KlKNRhqPAo581_Hsj2bId5zyTdPTQimBBliWHGA
+  baidu:
+  bing: A750048D4902C65242608ECD2FDCED3F
+
+# Friends 友链相关内容
+friends:
+  # href: /friends/
+  page:
+    title: "小伙伴们"
+    comments: true
+    description: "小伙伴们在哪里呀~"
+    updated: "2021-02-12"
+  list:
+  # - name:
+  #   bio:
+  #   avatar:
+  #   link:
+  - name: 糖菓·部落
+    bio: 𝕹𝖊𝖛𝖊𝖗 𝖉𝖗𝖔𝖜𝖓 𝖙𝖍𝖊 𝖋𝖆𝖑𝖒𝖊 𝖔𝖋 𝖍𝖔𝖕𝖊
+    avatar: https://cn.gravatar.com/avatar/a7f9e15fef26e0a540edc977e21cb3eb?s=128
+    link: https://candinya.com
+  - name: Davinci的红茶馆
+    bio: You are all stardust.
+    avatar: https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg
+    link: https://davincievans.top/
+  - name: 柠檬浣熊酱
+    bio: LemonHX的家
+    avatar: https://pbs.twimg.com/profile_images/1570488990418993154/yPyDb_1Q_400x400.jpg
+    link: https://lililikeuuu.lemonhx.moe/
+  - name: 昌维
+    bio: 昌维的网站
+    avatar: https://github.com/cw1997.png
+    link: https://blog.changwei.me/
+  - name: 煎饼果子
+    bio: 业精于勤，荒于嬉；行成于思，毁于随
+    avatar: https://cdn2.sublimerui.top/2021/07/09/40713906.jpg
+    link: https://blog.moej.cn/
+  - name: 橙子木的小木屋
+    bio: Network, Electron, AmateurRadio
+    avatar: https://blog.ypa.moe/media/image/avatar.png
+    link: https://blog.ypa.moe/
+  - name: 柠檬味的布丁盒子
+    bio: 寒蝉黎明之时,便是重生之日。
+    avatar: https://cravatar.cn/avatar/22b242a28bb848f2629f2a636bba9c03?s=400
+    link: https://www.imagic.run/
+  - name: Uniori
+    bio: Hope for world peace.
+    avatar: https://cdn.jsdelivr.net/gh/bronya5th/some-others/Gravatars/Avatar-television2.png
+    link: https://blog.uniori.xyz/
+  - name: MegaMU个人站
+    bio: 落日黄沙，白帆秋水，你可知谁的记忆在时空里飞？
+    avatar: https://megamu.icu/images/avatar.jpg
+    link: https://megamu.icu/
