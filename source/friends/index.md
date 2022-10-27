@@ -14,7 +14,7 @@ toc: true
 
 ### **小伙伴们**
 
-{% friends %}
+{% raw %}{% friends %}{% endraw %}
 
 
 

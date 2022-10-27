@@ -1,15 +1,61 @@
-
 # Global 全局配置
 site_analytics: <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?df581157cd9d6219e402d25e06e06345";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm, s);})();</script>
 hoster: <a href="https://www.aliyun.com" target="_blank">Aliyun</a>
 site_logo: /images/favicon.ico
 snow: true
+click_animate_js: 'candy'
 enable_dark: false
-cdn: false
+highlight_theme: night-eighties # 代码高亮主题（light | night | night-eighties | night-blue | night-bright）
+check_update: true
+
+vendors:
+  packages:
+    disqusjs:
+      version: 1.2.6
+    gitalk:
+      version: 1.7.2
+    gitment:
+      version: 0.0.3
+    twikoo:
+      version: 1.5.11
+    valine:
+      version: 1.4.18
+    "@waline/client":
+      version: 1.6.0
+    bootstrap:
+      version: 3.3.4
+    nprogress:
+      version: 0.2.0
+    aplayer:
+      version: 1.10.1
+    "@fancyapps/fancybox":
+      version: 3.5.7
+    clipboard:
+      version: 2.0.6
+    layui-src:
+      version: 2.5.5
+    font-awesome:
+      version: 4.7.0
+    jquery:
+      version: 3.6.0
+    qrcode_js:
+      version: 1.0.0
+    mermaid:
+      version: 9.1.1
+    meting:
+      version: 2.0.1
+
+# 自定义样式
+customStyles:
+  images: # 图片相关设置
+    banner: /images/banner.webp # 站点横幅
+    background: /images/bg.webp # 站点背景
 
 # Index 首页配置
 index:
   post_type: false
+  read_count: true
+  comment_count: true
 
 # Top Menu 顶部导航栏配置 （具体格式请参照文档）
 menu:
@@ -33,7 +79,6 @@ menu:
     twitter: https://twitter.com/frozenlemontee
     leetcode: https://leetcode-cn.com/u/frozenlemontee/
     bilibili: https://space.bilibili.com/88488273/
-    project: https://github.com/FrozenLemonTee/FrozenLemonTee.github.io
 
 label:
   index: <i class="fa fa-home"></i>首页
@@ -56,7 +101,6 @@ label:
     twitter: 推特主页
     leetcode: 力扣主页
     bilibili: B站主页
-    project: 本项目链接
 
 # Footer 页脚配置
 group_link:
@@ -64,7 +108,7 @@ contact:
   weibo:
   github: FrozenLemonTee
   mail: frozenlemontee@outlook.com
-  telegram:
+  telegram: frozenlemontee
   twitter: frozenlemontee
   facebook:
   linkedin:
@@ -81,7 +125,9 @@ posts:
   show_cc: true
   donate: false
   share: true
-  comments: waline
+  comments:
+    provider: 'waline'
+    enableBGImage: true
 
 # Disqus [Disqus](https://disqus.com) 评论相关
 disqus:
@@ -100,19 +146,19 @@ disqusjs:
 valine:
   app_id:
   app_key:
-  visitor:
-  enableQQ:
+  visitor: true
+  enableQQ: false
 
 # Twikoo [Twikoo](https://twikoo.js.org) 评论相关
 twikoo:
   env_id:
 
 # Waline [Waline](https://waline.js.org) 评论相关
-## 不仅限于以下内容，您可以参照 Waline的 [前端配置文档](https://waline.js.org/client/basic.html) 设置您需要的配置项
+## 不仅限于以下内容，您可以参照 Waline的 [前端配置文档](https://waline.js.org/reference/client.html) 设置您需要的配置项
 ## el 和 path 会在页面自动生成，不必加入
 waline:
   serverURL: "https://commentsblog.vercel.app" #后端服务器地址，必填
-  placeholder: "说点什么吧~(PS:点左上角登录/注册哦)"
+  placeholder: "说点什么吧~(PS:点右下角登录/注册哦)"
   avatar: "mp"
   requiredFields: ['nick','mail']
   visitor: true
@@ -120,6 +166,33 @@ waline:
     nick: 昵称（必填）
     mail: 邮箱（必填）
     link: 网址
+
+# Gitalk [Gitalk](https://gitalk.github.io/) 评论相关
+## 不仅限于以下内容，您可以参照 [Gitalk 文档](https://github.com/gitalk/gitalk/blob/master/readme-cn.md#%E8%AE%BE%E7%BD%AE) 设置您需要的配置项
+## id 会在页面自动生成，不必加入
+gitalk:
+  # clientID: 'GitHub Application Client ID'
+  # clientSecret: 'GitHub Application Client Secret'
+  # repo: 'Kratos-Rebirth-Demo'
+  # owner: 'Candinya'
+  # admin:
+  #   - 'Candinya'
+  # distractionFreeMode: false
+
+# Gitment [Gitment](https://github.com/imsun/gitment/) 评论相关
+## 不仅限于以下内容，您可以参照 [Gitment 文档](https://github.com/imsun/gitment#methods) 设置您需要的配置项
+## id 会在页面自动生成，不必加入
+gitment:
+  # owner: 'Candinya'
+  # repo: 'Kratos-Rebirth-Demo'
+  # oauth:
+  #   client_id: 'Your client ID'
+  #   client_secret: 'Your client secret'
+
+# LiveRe [LiveRe](https://livere.com/) 评论相关
+livere:
+  id: city
+  uid:
 
 # APlayer 左下角音乐播放器
 aplayer:
@@ -135,11 +208,15 @@ aplayer:
 sidebar: right
 widgets:
 - about
+- splitter
 - toc
 - category
 - tagcloud
 - posts
 avatarUri: https://i.loli.net/2021/10/26/rIDnecjG2QAZVvf.jpg
+mobile_toc:
+  hide: false
+  hide_id: false
 
 # Fancybox 文章内图片单击放大
 fancybox: true
@@ -155,17 +232,21 @@ search:
 ## 由于Javascript被压缩后难以有效编辑与生成，因而为了简化操作，将相关的配置项在生成文件时以独立的json文件写出，调用时使用fetch API获取。
 jsconfig:
   main:
-    picCDN: false
+    cover:
+      randomAmount: 20 # 表示从1~20
+      baseUrl: null # 使用默认值（不单独配置），将跟随 vendors 中的相关设定选择是否使用 cdn
+      filenameTemplate: "thumb_{no}.webp"
     createTime: "2021/02/12 23:00:00"
     donateBtn: "支持我~"
     scanNotice: "扫一扫，好不好？"
     qr_alipay: "/images/alipayqr.webp"
     qr_wechat: "/images/wechatpayqr.webp"
-    siteLeaveEvent: true
+    siteLeaveEvent: false
     leaveTitle: "{{{(>_<)}}}哦哟，崩溃啦~"
     returnTitle: "(*´∇｀*)欸，又好啦~"
     copyrightNotice: "该内容采用 CC BY-NC-SA 4.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"
     expire_day: 365
+    topNavScrollToggle: true
 
 # Site verify 站点验证相关配置内容
 site_verify:
@@ -175,17 +256,13 @@ site_verify:
 
 # Friends 友链相关内容
 friends:
-  # href: /friends/
+  href: "friends"
   page:
     title: "小伙伴们"
     comments: true
-    description: "小伙伴们在哪里呀~"
-    updated: "2021-02-12"
+    description: "小伙伴们在哪里~"
+    updated: "2022-10-27"
   list:
-  # - name:
-  #   bio:
-  #   avatar:
-  #   link:
   - name: 糖菓·部落
     bio: 𝕹𝖊𝖛𝖊𝖗 𝖉𝖗𝖔𝖜𝖓 𝖙𝖍𝖊 𝖋𝖆𝖑𝖒𝖊 𝖔𝖋 𝖍𝖔𝖕𝖊
     avatar: https://cn.gravatar.com/avatar/a7f9e15fef26e0a540edc977e21cb3eb?s=128
@@ -193,7 +270,7 @@ friends:
   - name: Davinci的红茶馆
     bio: You are all stardust.
     avatar: https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg
-    link: https://davincievans.top/
+    link: https://davinciteahouse.com/
   - name: 柠檬浣熊酱
     bio: LemonHX的家
     avatar: https://pbs.twimg.com/profile_images/1570488990418993154/yPyDb_1Q_400x400.jpg
@@ -222,3 +299,4 @@ friends:
     bio: 落日黄沙，白帆秋水，你可知谁的记忆在时空里飞？
     avatar: https://megamu.icu/images/avatar.jpg
     link: https://megamu.icu/
+  verify: true # 验证每个友链的可访问性，炸了会有提示

@@ -1,7 +1,5 @@
-let kr = {};
-
 /**
- * 因为后台任务API还是相当新的，而你的代码可能需要在那些不仍不支持此API的浏览器上运行。
+ * 因为后台任务API还是相当新的，而你的代码可能需要在那些仍不支持此API的浏览器上运行。
  * 你可以把 setTimeout() 用作回调选项来做这样的事。
  * 这个并不是 polyfill ，因为它在功能上并不相同； 
  * setTimeout() 并不会让你利用空闲时段，而是使你的代码在情况允许时执行你的代码，
@@ -25,27 +23,27 @@ window.cancelIdleCallback = window.cancelIdleCallback || function(id) {
 };
 
 (()=>{
-    const loadConfig = (cb) => {
-        // 读取配置文件
-        fetch('/config/main.json')
-            .then((res) => {
-                return res.json();
-            })
-            .then((cfg) => {
-                kr = cfg;
-            })
-            .then(()=>{
-                cb();
-            });
+    const loadConfig = async () => {
+        var url = (window.kr?.siteRoot || '/') + 'config/main.json';
+        return await (await fetch(url)).json()
     };
-    const gotopInit = ()=>{
-        const toolScroll = ()=>{
-            if ($(window).scrollTop()>200){
-                $('.kr-tool').addClass('scroll-down');
-            } else {
-                $('.kr-tool').removeClass('scroll-down');
-            }
-        }
+    const pageScrollDownInit = ()=>{
+        let isScrolledDown = false;
+        const pageScrollDownClass = () => {
+            window.requestAnimationFrame(() => {
+                if (window.scrollY > 200){
+                    if (!isScrolledDown) {
+                        document.body.classList.add('scroll-down');
+                        isScrolledDown = true;
+                    }
+                } else {
+                    if (isScrolledDown) {
+                        document.body.classList.remove('scroll-down');
+                        isScrolledDown = false;
+                    }
+                }
+            });
+        };
         $('.gotop-box').on('click',function(event){
             // event.preventDefault();
             $('html, body').animate({
@@ -53,20 +51,17 @@ window.cancelIdleCallback = window.cancelIdleCallback || function(id) {
             },500);
             return false;
         });
-        toolScroll();
-        $(window).scroll(()=>{
-            toolScroll();
-        });
+        pageScrollDownClass();
+        window.addEventListener('scroll', pageScrollDownClass);
     };
     const offcanvas = ()=>{
         let $clone = $('#kratos-menu-wrap').clone();
         $clone.attr({
             'id':'offcanvas-menu'
         });
-        $clone.filter('> ul').attr({
-            'class':'ul-me',
+        $clone.find('> ul').attr({
             'id':''
-        });
+        }).addClass('ul-me');
         $('#kratos-page').prepend($clone);
         $('.js-kratos-nav-toggle').on('click',()=>{
             if($('.nav-toggle').hasClass('toon')){
@@ -113,7 +108,7 @@ window.cancelIdleCallback = window.cancelIdleCallback || function(id) {
         });
     };
 
-    const donateConfig = ()=>{
+    const donateConfig = (kr)=>{
         $(document).on("click",".donate",()=>{
             layer.open({
                 type:1,
@@ -141,24 +136,71 @@ window.cancelIdleCallback = window.cancelIdleCallback || function(id) {
         $(document).on("click",".share",()=>{$(".share-wrap").fadeToggle("slow");});
     };
 
-    const setrandpic = ()=>{
+    const loadRandomCover = (kr)=>{
         // 图片
         const imageboxs = document.getElementsByClassName("kratos-entry-thumb-new-img");
-        const prefix = kr.picCDN ? "//cdn.jsdelivr.net/gh/Candinya/Kratos-Rebirth@latest/source/" : "/";
+        const randomAmount = kr.cover && kr.cover.randomAmount || 20;
+        const baseUrl = kr.cover && kr.cover.baseUrl || 'https://cdn.jsdelivr.net/npm/hexo-theme-kratos-rebirth@latest/source/images/thumb/'
+        const coverFileNameTemplate = kr.cover && kr.cover.filenameTemplate || "thumb_{no}.webp";
+        const usedCovers = new Array(randomAmount + 1);
+
+        const generateNewCoverID = () => {
+            let remailFailCounts = 5; // set max fail counts
+            let coverNo;
+            while (remailFailCounts > 0) {
+                // rand one
+                coverNo = Math.floor(Math.random() * randomAmount + 1);
+                if (!usedCovers[coverNo]) {
+                    // valid
+                    break;
+                } else {
+                    // fails
+                    remailFailCounts--;
+                }
+            }
+
+            if (remailFailCounts <= 0) {
+                // rand failed, find one manually
+                coverNo = -1;
+                for (let i = 1; i <= randomAmount; i++) {
+                    if (!usedCovers[i]) {
+                        // use first
+                        coverNo = i;
+                        break;
+                    }
+                }
+                if (coverNo === -1) {
+                    // All used
+                    // clear all
+                    for (let i = 1; i <= randomAmount; i++) {
+                        usedCovers[i] = false;
+                    }
+                    // rand one
+                    coverNo = Math.floor(Math.random() * randomAmount + 1);
+                }
+            }
+
+            // mark as used
+            usedCovers[coverNo] = true;
+            
+            // return
+            return coverNo;
+        }
+
         for (let i = 0, len = imageboxs.length; i < len; i++) {
             if (!($(imageboxs[i]).attr("src"))) {
-                $(imageboxs[i]).attr("src", prefix + `images/thumb/thumb_${Math.floor(Math.random()*20+1)}.webp`);
+                const coverNo = generateNewCoverID();
+                const coverFileName = coverFileNameTemplate.replace("{no}", coverNo.toString());
+                let coverUrl;
+                if (coverFileName.includes("//")) {
+                    coverUrl = coverFileName;
+                } else if (baseUrl.substring(baseUrl.length - 1) === "/") {
+                    coverUrl = baseUrl + coverFileName;
+                } else {
+                    coverUrl = baseUrl + '/' + coverFileName;
+                }
+                $(imageboxs[i]).attr("src", coverUrl);
             }
-                
-        }
-    };
-
-    const initMathjax = ()=>{
-        if (typeof MathJax !== 'undefined') {
-            // 渲染Mathjax的初始化函数（用于处理ajax后的情况）
-            // 使用了同步处理的方式，可惜第一次加载页面时会双倍触发
-            // （MathJax载入时会自动初始化一次）
-            MathJax.Hub.Typeset();
         }
     };
 
@@ -187,7 +229,7 @@ window.cancelIdleCallback = window.cancelIdleCallback || function(id) {
     };
 
     let copyrightString;
-    const setCopyright = ()=>{
+    const setCopyright = (kr)=>{
         copyrightString = `
 
 -------------------------
@@ -198,14 +240,16 @@ ${kr.copyrightNotice}
 `;
     }
 
-    const copyEventInit = ()=>{
+    const copyEventInit = (kr)=>{
         if (kr.copyrightNotice) {
             document.body.oncopy = (e)=>{
-                const copiedContent = window.getSelection().toString();
-                if (copiedContent.length > 150) {
-                    e.preventDefault();
-                    if (e.clipboardData) {
-                        e.clipboardData.setData("text/plain", copiedContent + copyrightString);
+                if (copyrightString) {
+                    const copiedContent = window.getSelection().toString();
+                    if (copiedContent.length > 150) {
+                        e.preventDefault();
+                        if (e.clipboardData) {
+                            e.clipboardData.setData("text/plain", copiedContent + copyrightString);
+                        }
                     }
                 }
             };
@@ -217,7 +261,7 @@ ${kr.copyrightNotice}
         docTitle = document.title;
     };
 
-    const leaveEventInit = () => {
+    const leaveEventInit = (kr) => {
         if (kr.siteLeaveEvent) {
             let titleTime;
             const OriginLogo = $('[rel="icon"]').attr("href");
@@ -286,7 +330,7 @@ ${kr.copyrightNotice}
         return tString;
     };
 
-    const initTime = () => {
+    const initTime = (kr) => {
         const createTime = new Date(kr.createTime);
         const upTimeNode = document.getElementById("span_dt");
         setInterval(() => {
@@ -339,6 +383,9 @@ ${kr.copyrightNotice}
                 // 取消上一个加载事件
                 window.cancelIdleCallback(window.loadCommentsEventHandler);
             }
+            if (typeof load_comm === 'undefined' || load_comm === null) {
+                return;
+            }
             // 加载新评论模块
             window.loadCommentsEventHandler = window.requestIdleCallback(load_comm);
             // 防止二次加载，清理掉函数
@@ -352,13 +399,12 @@ ${kr.copyrightNotice}
                 }
             }, { threshold: 0 });
             observer.observe(commsArea);
-        } else if (typeof load_comm !== 'undefined' && load_comm !== null) {
-            // 直接加载
+        } else {
             loadwork();
         }
     };
 
-    const expireNotify = () => {
+    const expireNotify = (kr) => {
         if (kr.expire_day) {
             const expireAlert = document.getElementById('expire-alert');
             if (expireAlert) {
@@ -376,71 +422,64 @@ ${kr.copyrightNotice}
         }
     };
 
-    const tocAnimInit = () => {
-        if (document.getElementById('krw-toc') !== null) {
+    const makeDelay = (callback, ms) => {
+        var timer = 0;
+        return function () {
+            var context = this, args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                callback.apply(context, args);
+            }, ms || 0);
+        };
+    }
+
+    const tocWidgetAnimInit = () => {
+        const sidebarTocWidget = document.getElementById('krw-toc');
+        const initFunc = () => {
             // 有toc的页面
-            // 获取所有的toc项
-            const tocDOMs = document.getElementsByClassName('toc-item');
+            // 获取侧边栏所有的toc项
+            const tocDOMs = sidebarTocWidget.getElementsByClassName('toc-item');
             // 元素高度映射记录
-            const tocHeightMap = [];
-            Array.from(tocDOMs).forEach((tocItem) => {
-                // 获取链接子元素
-                const linkItem = tocItem.getElementsByClassName('toc-link')[0];
-                // 获取链接地址
-                const titleText = decodeURI(linkItem.getAttribute('href'));
-                // 获取目标标题高度
-                const titleHeight = document.querySelector(titleText).offsetTop;
-                // 压入记录
-                tocHeightMap.push({
-                    h: titleHeight,
-                    el: tocItem
-                });
-            });
-
-            // 排序
-            tocHeightMap.sort((a, b) => {
-                return a.h - b.h;
-            });
-
-            // 标题定位函数
-            const tocGetId = (startPos = -1) => {
-                let newPos;
-                if (!Number.isInteger(startPos) || startPos < 0 || startPos > tocHeightMap.length - 1) {
-                    newPos = 0;
-                } else {
-                    newPos = startPos;
-                }
-                const nowY = window.scrollY;
-                if (tocHeightMap[0].h > nowY) {
-                    // 还没到第一级标题
-                    newPos = -1;
-                } else if (tocHeightMap[tocHeightMap.length - 1].h <= nowY) {
-                    // 最后一级标题
-                    newPos = tocHeightMap.length - 1;
-                } else {
-                    while (!(tocHeightMap[newPos].h <= nowY && tocHeightMap[newPos+1].h > nowY)) {
-                        if (tocHeightMap[newPos].h > nowY && newPos > 0) {
-                            newPos--;
-                        } else if (tocHeightMap[newPos+1].h <= nowY && newPos < tocHeightMap.length - 1) {
-                            newPos++;
-                        }
+            const tocItems = [];
+            try {
+                Array.from(tocDOMs).forEach((tocItem) => {
+                    const linkItem = tocItem.querySelector('.toc-link');
+                    const titleText = decodeURI(linkItem.getAttribute('href'));
+                    if (titleText.substring(0, 1) != '#') {
+                        throw new Error('TOC 小标题链接无效，格式无限');
                     }
-                }
-                return newPos;
+                    const titleElem = document.getElementById(titleText.substring(1));
+                    if (!titleElem) {
+                        throw new Error('TOC 小标题链接无效，未找到相关引用');
+                    }
+                    titleElem.setAttribute("data-toc-id", tocItems.length)
+                    tocItems.push({
+                        at: titleElem,
+                        el: tocItem
+                    });
+                });
+            } catch (e) {
+                console.log('错误：', e.message);
+                Array.from(tocDOMs).forEach((tocItem) => {
+                    tocItem.classList.add('show');
+                });
+                return;
             }
 
+            // 初始化为不存在的标题
+            let curTocId = -1;
             // 标题激活状态修改函数
-            const tocActivate = (oldId, newId) => {
-                if (oldId === newId) {
+            const tocActivate = (newId) => {
+                if (curTocId === newId) {
                     // Do nothing...
                     return;
                 }
-                if (oldId !== -1) {
+                if (curTocId !== -1) {
                     // 清除旧标题激活状态
-                    tocHeightMap[oldId].el.classList.remove('active');
-                    tocHeightMap[oldId].el.classList.remove('show');
+                    tocItems[curTocId].el.classList.remove('active');
+                    tocItems[curTocId].el.classList.remove('show');
                     // 清除旧元素层级展示状态
-                    let nCur = tocHeightMap[oldId].el
+                    let nCur = tocItems[curTocId].el
                     while (!nCur.classList.contains('toc')) {
                         if (nCur.classList.contains('toc-item')) {
                             nCur.classList.remove('show');
@@ -450,10 +489,10 @@ ${kr.copyrightNotice}
                 }
                 if (newId !== -1) {
                     // 构建新标题激活状态
-                    tocHeightMap[newId].el.classList.add('active');
-                    tocHeightMap[newId].el.classList.add('show');
+                    tocItems[newId].el.classList.add('active');
+                    tocItems[newId].el.classList.add('show');
                     // 建立新元素层级展示状态
-                    let nCur = tocHeightMap[newId].el
+                    let nCur = tocItems[newId].el
                     while (!nCur.classList.contains('toc')) {
                         if (nCur.classList.contains('toc-item')) {
                             nCur.classList.add('show');
@@ -461,114 +500,231 @@ ${kr.copyrightNotice}
                         nCur = nCur.parentNode;
                     }
                 }
+                curTocId = newId;
             };
 
-            // 初始化为不存在的标题
-            let curTocId = -1;
-            // 切换 toc 状态的处理函数
-            const toggleToc = () => {
-                const newTocId = tocGetId(curTocId);
-                tocActivate(curTocId, newTocId);
-                curTocId = newTocId;
-            };
-
-            // 处理事件的函数
-            const handleTocAnim = () => {
-                // 现在的检测事件ID
-                let nowEvent = 0;
-                window.requestAnimationFrame(() => {
-                    if (nowEvent) {
-                        // 为避免高频触发，使用检测事件来控制频率
-                        clearTimeout(nowEvent);
+            if ("IntersectionObserver" in window) {
+                const applyDecision = makeDelay((i, pos) => {
+                    if (pos === window.scrollY) {
+                        window.requestAnimationFrame(() => {
+                            tocActivate(i);
+                        });
+                    } else {
+                        applyDecision(i, window.scrollY);
                     }
-                    nowEvent = setTimeout((nowY) => {
-                        if (nowY === window.scrollY) {
-                            // 0.1s位置没有变化，视为页面停止
-                            toggleToc();
+                }, 100)
+
+                const observer = new IntersectionObserver((entries) => {
+                    let decision = null
+                    entries.forEach((entry) => {
+                        const currentIndex = Number.parseInt(entry.target.getAttribute('data-toc-id'), 10);
+                        if (!entry.isIntersecting
+                            && entry.boundingClientRect.top <= entry.rootBounds.top) {
+                            decision = currentIndex
+                        } else if (entry.isIntersecting
+                            && entry.boundingClientRect.bottom < entry.rootBounds.top + entry.rootBounds.height / 2
+                            && entry.intersectionRatio === 1) {
+                            decision = currentIndex - 1
                         }
-                    }, 100, window.scrollY);
+                    })
+                    if (decision !== null) {
+                        applyDecision(decision, window.scrollY);
+                    }
+                }, {
+                    rootMargin: '-62px 0px 0px 0px',
+                    threshold: 1.0,
+                })
+                tocItems.forEach((x) => {
+                    observer.observe(x.at)
                 });
+                window.addEventListener('pjax:before', () => {
+                    observer.disconnect();
+                    tocItems.length = 0; // 奇妙的数组清空方式
+                }, { once: true });
+            } else {
+                const tocUpdatePos = () => {
+                    tocItems.forEach((x) => {
+                        x.h = x.at.getBoundingClientRect().top + window.scrollY - 61 // 比 click 事件那里多减掉1，避免浏览器 round 后导致的判断失败
+                    });
+                };
+
+                tocUpdatePos();
+
+                // 标题定位函数
+                const tocGetId = () => {
+                    let newPos;
+                    if (!Number.isInteger(curTocId) || curTocId < 0 || curTocId > tocItems.length - 1) {
+                        newPos = 0;
+                    } else {
+                        newPos = curTocId;
+                    }
+                    const nowY = window.scrollY;
+                    if (nowY >= tocItems[newPos].h) {
+                        if (nowY >= tocItems[tocItems.length - 1].h) {
+                            newPos = tocItems.length - 1;
+                        } else {
+                            while (nowY >= tocItems[newPos + 1].h) {
+                                newPos++;
+                            }
+                        }
+                    } else {
+                        while (nowY < tocItems[newPos].h) {
+                            newPos--;
+                            if (newPos < 0) break;
+                        }
+                    }
+                    return newPos;
+                }
+
+                // 处理事件的函数
+                const tocOnScroll = makeDelay(() => {
+                    window.requestAnimationFrame(() => {
+                        tocActivate(tocGetId());
+                    });
+                }, 100);
+
+                const tocOnResize = makeDelay(() => {
+                    tocUpdatePos();
+                    window.requestAnimationFrame(() => {
+                        tocActivate(tocGetId());
+                    });
+                }, 100);
+
+                window.addEventListener("resize", tocOnResize);
+                window.addEventListener('scroll', tocOnScroll);
+                // pjax前销毁
+                window.addEventListener('pjax:before', () => {
+                    window.removeEventListener('resize', tocOnResize);
+                    window.removeEventListener('scroll', tocOnScroll);
+                    tocItems.length = 0; // 奇妙的数组清空方式
+                }, { once: true });
             }
-
-            window.addEventListener('scroll', handleTocAnim);
-
-            // 初始化完成运行一次
-            toggleToc();
-
-            // pjax前销毁
-            window.addEventListener('pjax:before', () => {
-                tocHeightMap.length = 0; // 奇妙的数组清空方式
-                window.removeEventListener('scroll', handleTocAnim);
-            }, { once: true });
 
             // 阅读进度
             const readProgBar = document.getElementsByClassName('toc-progress-bar')[0];
+            const articleElem = document.querySelector('.kratos-post-content');
             const setPercent = () => {
-                readProgBar.style.width = (window.scrollY / document.body.clientHeight * 100).toString() + '%';
+                // 参考 Butterfly 主题相关实现
+                // https://github.com/jerryc127/hexo-theme-butterfly/blob/c1ac4a5e167f7bb26287fc9ca32a182cfc293231/source/js/main.js#L337-L346
+                if (articleElem) {
+                    const currentTop = window.scrollY || document.documentElement.scrollTop
+                    const docHeight = articleElem.clientHeight
+                    const winHeight = document.documentElement.clientHeight
+                    const headerHeight = articleElem.offsetTop
+                    const contentMath =
+                        (docHeight > winHeight) ?
+                            (docHeight - winHeight) :
+                            (document.documentElement.scrollHeight - winHeight)
+                    const scrollPercent = Math.max(0, Math.min((currentTop - headerHeight) / (contentMath), 1))
+                    const scrollPercentRound = Math.round(scrollPercent * 100)
+                    readProgBar.style.width = (scrollPercent * 100).toString() + '%';
+                    readProgBar.setAttribute('aria-valuenow', scrollPercentRound);
+                }
             }
             window.addEventListener('scroll', () => {
                 window.requestAnimationFrame(setPercent);
             });
             setPercent(); // 初始运行一次
-
-            /**
-             * 现在的问题：
-             * 首次打开页面时候由于会有 window.onload 事件的等待存在，
-             * 所以会等待所有图片加载完成再调用核心的函数，因而基本保证
-             * 各标题间的位置不会乱动，但代价就是要等页面加载完成才能加
-             * 载toc样式，问题不是太大；
-             * pjax后则会由于没有 window.onload 事件的限制，因而容易
-             * 出现图片还没加载但是标题已经计算完成的情况，进而导致标题
-             * 定位乱飘，失去引导意义；
-             * 有一种解决方案是每次触发定位事件时都重新计算各元素高度，
-             * 但是怀疑那样会非常耗费时间，降低用户使用体验；
-             * 或者就是定时检测变化，但总觉得也非常不优雅，比较难受；
-             * 之后会考虑重载 hexo 的辅助函数，重写 asset_img 标签
-             * 用来内置 fancybox 的调用、计算图片大小进行格式转换与预
-             * 设置大小，但不知道 hexo 是否支持这样的操作，是否会报错，
-             * 还是说需要提交一个 PR 才能正确运行（猫咪摊手.jpg
-             */
+        }
+        if (sidebarTocWidget) {
+            if (sidebarTocWidget.offsetParent !== null) {
+                initFunc();
+            } else if ("IntersectionObserver" in window) {
+                // Init when become visible
+                new IntersectionObserver(initFunc, {
+                    threshold: 0,
+                    once: true,
+                }).observe(sidebarTocWidget);
+            }
         }
     };
 
-    const pjaxReload = () => {
-        setrandpic();
-        fancyboxInit();
-        setCopyright();
+    const topNavScrollToggleInit = (kr) => {
+        // 判断设置参数
+        if (!kr.topNavScrollToggle) {
+            return; // 没有启用
+        }
+        // 记录上一次滚动高度，用于判断滚动方向
+        let lastHeight = window.innerHeight;
+        // 记录顶部栏隐藏状态
+        let isTopNavHidden = false;
+
+        // 处理事件的函数
+        const handleTopNavScrollToggle = () => {
+            window.requestAnimationFrame(() => {
+                if (lastHeight < window.scrollY) {
+                    // 向下滚动
+                    if (!isTopNavHidden) {
+                        document.body.classList.add('nav-up');
+                        isTopNavHidden = true;
+                    }
+                } else if (lastHeight > window.scrollY) {
+                    // 向上滚动
+                    if (isTopNavHidden) {
+                        document.body.classList.remove('nav-up');
+                        isTopNavHidden = false;
+                    }
+                }
+                // 相等则不做处理
+                lastHeight = window.scrollY;
+            });
+        };
+
+        // 仅处理鼠标滚动
+        window.addEventListener('wheel', handleTopNavScrollToggle);
+
+    };
+
+    const initPerPage = () => {
+        tocWidgetAnimInit();
         saveTitle();
-        initMathjax();
         codeCopyInit();
+        fancyboxInit();
         commentsLazyLoad();
-        expireNotify();
-        tocAnimInit();
     };
 
-    window.addEventListener('pjax:complete', pjaxReload);
-
-    const funcUsingConfig = () => {
-        // 因为涉及到配置文件，所以这些是只有在完成配置加载后才能调用的函数
-        pjaxReload();
-        copyEventInit();
-        leaveEventInit();
-        initTime();
-        donateConfig();
+    const initPerPageWithConfig = kr => {
+        loadRandomCover(kr);
+        setCopyright(kr);
+        expireNotify(kr);
     };
 
-    window.addEventListener('window:onload', () => {
-        loadConfig(funcUsingConfig);
-        gotopInit();
+    window.addEventListener('pjax:complete', () => {
+        initPerPage();
+        if (typeof MathJax !== 'undefined') {
+            MathJax.Hub.Typeset();
+        }
+    });
+
+    function themeInit() {
+        document.removeEventListener("DOMContentLoaded", themeInit, false);
+        window.removeEventListener("load", themeInit, false);
+
+        loadConfig().then(kr => {
+            copyEventInit(kr);
+            leaveEventInit(kr);
+            initTime(kr);
+            donateConfig(kr);
+            topNavScrollToggleInit(kr);
+            initPerPageWithConfig(kr);
+            window.addEventListener('pjax:complete', () => {
+                initPerPageWithConfig(kr);
+            });
+        });
+        
+        pageScrollDownInit();
         offcanvas();
         mobiClick();
         xControl();
         shareMenu();
         tocNavInit();
-    }, { once: true });
+        initPerPage();
+    }
 
-    const finishInfo = () => {
-        window.dispatchEvent(new Event('window:onload'));
-        console.log('页面加载完毕！消耗了 %c'+Math.round(performance.now()*100)/100+' ms','background:#282c34;color:#51aded;');
-    };
-
-    window.onload = finishInfo();
-
+    if (document.readyState === "complete") {
+        setTimeout(themeInit);
+    } else {
+        document.addEventListener("DOMContentLoaded", themeInit, false);
+        window.addEventListener("load", themeInit, false); //fallback
+    }
 })();

@@ -1,4 +1,4 @@
-<div id="w-comments" class="post-comments<% if (!theme.waline.visitor) { %> lazy-load<% } %>"></div>
+<div id="w-comments" class="post-comments<% if (!theme.waline.visitor) { %> lazy-load<% } %><% if (theme.posts.comments?.enableBGImage) { %> bg-image<% } %>"></div>
 <script>
     var load_comm = () => {
         const init = () => {
@@ -7,8 +7,8 @@
                 path: '<%- url_for(page.path) %>'
             }, JSON.parse('<%- JSON.stringify(theme.waline) %>')));
         }
-        if (typeof Waline == 'undefined') {
-            const src = 'https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js';
+        if (typeof Waline === 'undefined') {
+            const src = '<%- url_npm_cdn("@waline/client", "dist/Waline.min.js") %>';
             $.getScript(src, init);
         } else {
             init();

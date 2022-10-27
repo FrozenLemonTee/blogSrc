@@ -1,11 +1,18 @@
 # NodeJS
 node_modules/
 
-# 配置文件
-# _config.yml
-
 # 站点图像
-source/images/favicon.webp
+source/images/
 
 # 锁文件
 package-lock.json
+yarn.lock
+.yarn/
+.pnp.js
+
+# (自定义)备份文件夹
+_backup/
+
+# IDE相关配置目录
+.vscode/
+.idea/
