@@ -21,7 +21,10 @@
                         <% if (theme.contact.rss) {%><li><a target="_blank" rel="nofollow" href="<%- config.root + theme.contact.rss %>"><i class="fa fa-rss"></i></a></li><% } %>
                     </ul>
                     <ul class="kratos-copyright">
-                      <div id="busuanzi_container_site_pv" style="inline;"><li>本站总访问量: <span id="busuanzi_value_site_pv" style="inline;"></span>次</li> <li>本站访客数: <span id="busuanzi_value_site_uv"></span>人次</li></div>
+                        <div>
+                            <li>本站总访问量: <span id="busuanzi_value_site_pv"></span>次</li>
+                            <li>本站访客数: <span id="busuanzi_value_site_uv"></span>人次</li>
+                        </div>
                         <div>
                             <li>&copy; <%- date(new Date(), 'YYYY') %> <%- config.title || config.author %> <%- __('copyright') %>.</li>
                             <li><%- theme.timenotice %><span id="span_dt">Loading...</span></li>
