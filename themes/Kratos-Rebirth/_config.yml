@@ -165,7 +165,7 @@ waline:
   langMode:
     nick: 昵称（必填）
     mail: 邮箱（必填）
-    link: 网址（可选）
+    link: 网址
 
 # Gitalk [Gitalk](https://gitalk.github.io/) 评论相关
 ## 不仅限于以下内容，您可以参照 [Gitalk 文档](https://github.com/gitalk/gitalk/blob/master/readme-cn.md#%E8%AE%BE%E7%BD%AE) 设置您需要的配置项
