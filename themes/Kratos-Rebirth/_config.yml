@@ -163,8 +163,8 @@ waline:
   requiredFields: ['nick','mail']
   visitor: false
   langMode:
-    nick: 昵称（必填）
-    mail: 邮箱（必填）
+    nick: 昵称(必填)
+    mail: 邮箱(必填)
     link: 网址
 
 # Gitalk [Gitalk](https://gitalk.github.io/) 评论相关
