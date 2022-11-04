@@ -14,7 +14,7 @@ toc: true
 
 ### **小伙伴们**
 
-{% raw %}{% friends %}{% endraw %}
+{% friends %}
 
 
 
@@ -26,9 +26,9 @@ toc: true
 >
 > **\# bio： 让美好的时光常驻**
 >
-> **\# avatar： https://i.loli.net/2021/10/26/rIDnecjG2QAZVvf.jpg**
+> **\# avatar： https://gravatar.loli.top/avatar/daa9065cbb0c460bed9cc34276a2ff1b?s=1024**
 >
-> **\# link： https://www.frozenlemontee.top/**
+> **\# link： https://frozenlemontee.top/**
 
 如果我的链接突然失效了，欢迎告诉我哦！另外如果我的链接有变更，我也会在这里更新并尽快通知各位的！
 

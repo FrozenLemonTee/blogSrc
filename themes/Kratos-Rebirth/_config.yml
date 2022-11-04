@@ -213,7 +213,7 @@ widgets:
 - category
 - tagcloud
 - posts
-avatarUri: https://gravatar.com/avatar/daa9065cbb0c460bed9cc34276a2ff1b?s=1024
+avatarUri: https://gravatar.loli.top/avatar/daa9065cbb0c460bed9cc34276a2ff1b?s=1024
 mobile_toc:
   hide: false
   hide_id: false
@@ -256,7 +256,8 @@ site_verify:
 
 # Friends 友链相关内容
 friends:
-  href: "friends"
+#  href: "friends"
+  href: ""
   page:
     title: "小伙伴们"
     comments: true
