@@ -26,7 +26,7 @@ toc: true
 >
 > **\# bio： 让美好的时光常驻**
 >
-> **\# avatar： https://gravatar.loli.top/avatar/daa9065cbb0c460bed9cc34276a2ff1b?s=1024**
+> **\# avatar： http://gallary.frozenlemontee.top/avatar/daa9065cbb0c460bed9cc34276a2ff1b?s=1024**
 >
 > **\# link： https://frozenlemontee.top/**
 
